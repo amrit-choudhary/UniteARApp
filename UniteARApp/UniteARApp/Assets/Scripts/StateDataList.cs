@@ -5,9 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class StateDataList
 {
-    public List<StateData> stateDataList;
+    [SerializeField]
+    public List<StateData> dataList;
 
     public StateDataList() {
-        stateDataList = new List<StateData>();
+        dataList = new List<StateData>();
     }
 }
