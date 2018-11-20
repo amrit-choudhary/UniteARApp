@@ -12,7 +12,8 @@ public class GUIManager : MonoBehaviour
     public GameObject statePanel;
 
     public GameObject buttonPrefab;
-    public Transform buttonsParentPanel;
+    public Transform buttonsParentPanel1;
+    public Transform buttonsParentPanel2;
 
     public Text nameText;
     public Text typeText;
@@ -21,9 +22,7 @@ public class GUIManager : MonoBehaviour
     public Text formedInText;
     public Text capitalText;
     public Text introText;
-    public Text historyText;
-    public Text geographyText;
-    public Text economyText;
+    public Text detailsText;
     public Text ambassarods;
 
     // Use this for initialization
@@ -41,7 +40,12 @@ public class GUIManager : MonoBehaviour
         for(int i = 0; i < 36; i++){
             StateData stateData = stateDataManager.GetStateData(i);
             GameObject temp = Instantiate(buttonPrefab);
-            temp.transform.SetParent(buttonsParentPanel);
+
+            if(i > 17)
+                temp.transform.SetParent(buttonsParentPanel1);
+            else
+                temp.transform.SetParent(buttonsParentPanel2);
+            
             temp.GetComponentInChildren<Text>().text = stateData.name;
             int tempIndex = i;
             temp.GetComponent<Button>().onClick.AddListener(() => ShowState(tempIndex));         
@@ -54,16 +58,14 @@ public class GUIManager : MonoBehaviour
     }
 
     private void PopulateStateUI(StateData stateData_) {
-        nameText.text = stateData_.name;
-        typeText.text = stateData_.type;
-        vehicleCodeText.text = "Code: " + stateData_.vehicleCode;
-        mainLanguageText.text = "Language: " + stateData_.mainLanguage;
-        formedInText.text = "Formed: " + stateData_.formedIn;
-        capitalText.text = "Capital: " + stateData_.capital;
+        nameText.text = stateData_.name.ToUpper();
+        vehicleCodeText.text = stateData_.vehicleCode;
+        mainLanguageText.text = stateData_.mainLanguage;
+        formedInText.text = stateData_.formedIn;
+        capitalText.text = stateData_.capital;
         introText.text = stateData_.intro;
-        historyText.text = stateData_.history;
-        geographyText.text = stateData_.geography;
-        ambassarods.text = "Ambassadors: " + stateData_.ambassadors;
+        detailsText.text = stateData_.history + "\n\n" + stateData_.geography + "\n\n" +  stateData_.economy;
+        ambassarods.text = stateData_.ambassadors;
 
         ShowStateUI();
     }
